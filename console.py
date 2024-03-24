@@ -114,17 +114,29 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
-        if not args:
-            print("** class name missing **")
+        """create: create [ARG] [PARAM 1] [PARAM 2] ...
+        ARG = Class Name
+        PARAM = <key name>=<value>
+                value syntax: "<value>"
+        SYNOPSIS: Creates a new instance of the Class from given input ARG
+                  and PARAMS. Key in PARAM = an instance attribute.
+        EXAMPLE: create City name="Chicago"
+                 City.create(name="Chicago")
+        """
+        arg = arg.split()
+        error = self.__class_err(arg)
+        if error:
             return
-        elif args not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
-        print(new_instance.id)
-        storage.save()
+        k = arg[0]
+        class_obj = CNC[k]
+        if len(arg) > 1:
+            d = self.__create_dict({}, arg[1:])
+        else:
+            d = {}
+        my_obj = class_obj(**d)
+        my_obj.save()
+        print(my_obj.id)
+
 
     def help_create(self):
         """ Help information for the create method """
