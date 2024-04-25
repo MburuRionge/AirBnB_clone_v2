@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" starts a Flask web application: """
+"""
+starts a Flask web application
+"""
 
 from flask import Flask
 app = Flask(__name___)
@@ -7,7 +9,7 @@ app = Flask(__name___)
 
 @app.route('/'strict_slashes=False)
 def hello_hbn():
-    """ displays Hello HBNB! """
+    """displays Hello HBNB!"""
     return "Hello HBNB!"
 
 
