@@ -9,7 +9,8 @@ execute: fab -f 3-deploy_web_static.py deploy -i ~/.ssh/id_rsa -u ubuntu
 from fabric.api import env, local, put, run
 from datetime import datetime
 from os.path import exists, isdir
-env.hosts = ['54.157.176.195', '52.91.182.133']
+
+env.hosts = ['54.175.20.110', '54.89.178.225']
 
 
 def do_pack():
@@ -21,7 +22,8 @@ def do_pack():
         file_name = "versions/web_static_{}.tgz".format(date)
         local("tar -cvzf {} web_static".format(file_name))
         return file_name
-    except:
+    except Exception as e:
+        print("Error", e)
         return None
 
 
@@ -42,7 +44,8 @@ def do_deploy(archive_path):
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
-    except:
+    except Exception as e:
+        print("Error", e)
         return False
 
 
